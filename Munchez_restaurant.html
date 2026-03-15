@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Muncheez Bistro — Home of Spice | Membley, Nairobi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --spice: #C8380A;
+      --ember: #E8621A;
+      --gold: #C4962A;
+      --dark: #0F0A05;
+      --deep: #1C1108;
+      --wood: #2E1F0E;
+      --cream: #F7F0E0;
+      --muted: rgba(247,240,224,0.55);
+      --border: rgba(247,240,224,0.08);
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--cream); font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--spice); }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 3rem;
+      background: rgba(15,10,5,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { display: flex; flex-direction: column; line-height: 1; }
+    .logo-main { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 4px; color: var(--cream); }
+    .logo-main span { color: var(--spice); }
+    .logo-sub { font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.78rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-reserve { background: var(--spice) !important; color: #fff !important; padding: 0.5rem 1.2rem; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .hamburger span { width: 24px; height: 2px; background: var(--cream); display: block; }
+
+    /* HERO */
+    .hero { min-height: 100vh; position: relative; display: flex; align-items: center; overflow: hidden; }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 80% at 65% 40%, rgba(200,56,10,0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 20% 70%, rgba(196,150,42,0.07) 0%, transparent 50%),
+        linear-gradient(160deg, #0F0A05 0%, #1C1108 50%, #0F0A05 100%);
+    }
+    .hero-grid { position: absolute; inset: 0; opacity: 0.03; background-image: linear-gradient(var(--cream) 1px, transparent 1px), linear-gradient(90deg, var(--cream) 1px, transparent 1px); background-size: 60px 60px; }
+    .hero-content { position: relative; z-index: 2; padding: 6rem 3rem 3rem; max-width: 1300px; margin: 0 auto; width: 100%; }
+    .hero-eyebrow { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; animation: fadeUp 0.8s ease both; }
+    .hero-eyebrow-line { width: 40px; height: 1px; background: var(--spice); }
+    .hero-eyebrow span { font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 9vw, 8.5rem); font-weight: 700; line-height: 0.92; margin-bottom: 2rem; animation: fadeUp 0.8s ease 0.15s both; }
+    .hero-title .t1 { display: block; color: var(--cream); }
+    .hero-title .t2 { display: block; color: var(--spice); font-style: italic; }
+    .hero-title .t3 { display: block; font-size: 0.42em; letter-spacing: 8px; text-transform: uppercase; font-style: normal; font-family: 'Outfit', sans-serif; font-weight: 300; margin-top: 0.6rem; color: var(--muted); }
+    .hero-desc { max-width: 520px; color: var(--muted); font-size: 1rem; line-height: 1.8; font-weight: 300; margin-bottom: 2.5rem; animation: fadeUp 0.8s ease 0.3s both; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.8s ease 0.45s both; }
+    .hero-stats { display: flex; gap: 2rem; margin-top: 4rem; animation: fadeUp 0.8s ease 0.6s both; flex-wrap: wrap; }
+    .h-stat { border-left: 3px solid var(--spice); padding-left: 1rem; }
+    .h-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--spice); line-height: 1; }
+    .h-stat-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+    /* BUTTONS */
+    .btn-fill { background: var(--spice); color: #fff; padding: 1rem 2.2rem; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; transition: background 0.2s, transform 0.15s; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+    .btn-fill:hover { background: var(--ember); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--cream); padding: 1rem 2.2rem; border: 1px solid rgba(247,240,224,0.25); cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; transition: border-color 0.2s, color 0.2s; }
+    .btn-outline:hover { border-color: var(--spice); color: var(--spice); }
+
+    /* TICKER */
+    .ticker { background: var(--spice); padding: 0.65rem 0; overflow: hidden; white-space: nowrap; }
+    .ticker-inner { display: inline-flex; gap: 2.5rem; animation: ticker 30s linear infinite; }
+    .ticker-item { font-family: 'Bebas Neue', sans-serif; font-size: 0.95rem; letter-spacing: 3px; color: #fff; }
+    .ticker-dot { color: rgba(255,255,255,0.4); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* SECTION COMMONS */
+    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
+    .section-eyebrow { font-size: 0.68rem; letter-spacing: 5px; text-transform: uppercase; color: var(--spice); font-weight: 600; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--spice); display: block; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; line-height: 1.1; }
+
+    /* ABOUT */
+    .about { padding: 7rem 0; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .about-text p { color: var(--muted); line-height: 1.9; font-weight: 300; font-size: 0.95rem; margin-top: 1.5rem; }
+    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 2rem; }
+    .about-feat { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: var(--muted); }
+    .about-feat-dot { width: 6px; height: 6px; background: var(--spice); border-radius: 50%; flex-shrink: 0; }
+    .about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .about-card { background: var(--deep); border: 1px solid var(--border); padding: 2rem; }
+    .about-card.span2 { grid-column: 1/-1; border-color: rgba(200,56,10,0.3); }
+    .about-card-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--spice); line-height: 1; }
+    .about-card-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
+    .about-card-text { font-size: 0.85rem; color: var(--muted); line-height: 1.7; font-weight: 300; font-style: italic; margin-top: 0.8rem; }
+    .stars { color: var(--gold); letter-spacing: 2px; }
+
+    /* MENU */
+    .menu-section { padding: 7rem 0; background: var(--deep); }
+    .menu-cats { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 2rem 0; }
+    .cat-btn { padding: 0.5rem 1.3rem; background: transparent; border: 1px solid var(--border); color: var(--muted); font-family: 'Outfit', sans-serif; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+    .cat-btn.active, .cat-btn:hover { background: var(--spice); border-color: var(--spice); color: #fff; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border); }
+    .menu-card { background: var(--deep); padding: 2rem; transition: background 0.25s; display: none; }
+    .menu-card.visible { display: block; }
+    .menu-card:hover { background: var(--wood); }
+    .menu-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.6rem; }
+    .menu-card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 700; color: var(--cream); max-width: 65%; line-height: 1.2; }
+    .menu-card-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--spice); letter-spacing: 1px; }
+    .menu-card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+    .menu-card-tags { display: flex; gap: 0.4rem; margin-top: 0.8rem; flex-wrap: wrap; }
+    .menu-tag { font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid; }
+    .menu-tag.sig { color: var(--gold); border-color: rgba(196,150,42,0.3); }
+    .menu-tag.hot { color: var(--spice); border-color: rgba(200,56,10,0.3); }
+    .menu-tag.veg { color: #6BCB77; border-color: rgba(107,203,119,0.3); }
+    .menu-tag.new { color: #64B5F6; border-color: rgba(100,181,246,0.3); }
+
+    /* EXPERIENCE */
+    .experience { padding: 7rem 0; }
+    .exp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); margin-top: 3rem; }
+    .exp-card { background: var(--dark); padding: 2.5rem 2rem; border-bottom: 3px solid transparent; transition: border-color 0.3s, background 0.3s; }
+    .exp-card:hover { border-color: var(--spice); background: var(--deep); }
+    .exp-icon { font-size: 2rem; margin-bottom: 1.2rem; }
+    .exp-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .exp-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+    /* REVIEWS */
+    .reviews { padding: 7rem 0; background: var(--deep); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .review-card { background: var(--dark); padding: 2rem; border: 1px solid var(--border); position: relative; overflow: hidden; transition: border-color 0.3s; }
+    .review-card:hover { border-color: rgba(200,56,10,0.3); }
+    .review-card::before { content: '\201C'; font-family: 'Cormorant Garamond', serif; font-size: 6rem; color: var(--spice); opacity: 0.08; position: absolute; top: -1rem; left: 0.5rem; line-height: 1; }
+    .review-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 2px; }
+    .review-text { font-size: 0.88rem; color: var(--muted); line-height: 1.8; font-weight: 300; font-style: italic; margin-bottom: 1.5rem; position: relative; z-index: 1; }
+    .review-name { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+    .review-detail { font-size: 0.68rem; color: rgba(247,240,224,0.3); margin-top: 0.2rem; }
+    .score-row { display: flex; gap: 0.4rem; margin-top: 0.8rem; }
+    .score-pill { font-size: 0.62rem; padding: 0.2rem 0.5rem; background: rgba(200,56,10,0.1); border: 1px solid rgba(200,56,10,0.2); color: var(--spice); letter-spacing: 1px; }
+
+    /* INFO */
+    .info-section { padding: 7rem 0; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+    .info-block-title { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 3px; color: var(--gold); margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); }
+    .info-item { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
+    .info-item-icon { font-size: 1rem; flex-shrink: 0; }
+    .info-item-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+    .info-item-text strong { color: var(--cream); font-weight: 500; }
+    .info-tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .info-tag { font-size: 0.65rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 0.3rem 0.7rem; border: 1px solid var(--border); color: var(--muted); }
+    .hours-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); color: var(--muted); }
+    .open-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(107,203,119,0.1); border: 1px solid rgba(107,203,119,0.3); color: #6BCB77; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; padding: 0.3rem 0.8rem; margin-bottom: 1rem; }
+    .open-dot { width: 6px; height: 6px; background: #6BCB77; border-radius: 50%; animation: pulse 1.5s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* MAP */
+    .map-section { padding: 7rem 0; background: var(--deep); }
+    .map-inner { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: start; margin-top: 3rem; }
+    .map-detail-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1.2rem 0; border-bottom: 1px solid var(--border); }
+    .map-detail-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .map-detail-label { font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--spice); margin-bottom: 0.3rem; }
+    .map-detail-val { font-size: 0.88rem; color: var(--cream); line-height: 1.5; }
+    .map-frame { border: 1px solid var(--border); overflow: hidden; }
+    .map-frame iframe { width: 100%; height: 380px; border: none; display: block; filter: grayscale(20%); }
+
+    /* ORDER CTA */
+    .order-cta { padding: 8rem 3rem; text-align: center; position: relative; overflow: hidden; }
+    .order-cta-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(200,56,10,0.12) 0%, transparent 70%); }
+    .order-cta-content { position: relative; z-index: 1; }
+    .order-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.1; }
+    .order-cta h2 em { color: var(--spice); font-style: italic; }
+    .order-cta p { color: var(--muted); font-weight: 300; margin-bottom: 2.5rem; font-size: 1rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .btn-whatsapp { display: inline-flex; align-items: center; gap: 0.8rem; background: #25D366; color: #fff; padding: 1.1rem 2.5rem; text-decoration: none; font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; transition: background 0.2s, transform 0.15s; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); }
+    .btn-whatsapp:hover { background: #1fba58; transform: translateY(-3px); }
+    .btn-call { display: inline-flex; align-items: center; gap: 0.8rem; background: transparent; color: var(--cream); padding: 1.1rem 2.5rem; text-decoration: none; font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; border: 1px solid rgba(247,240,224,0.2); transition: border-color 0.2s, color 0.2s; margin-left: 1rem; }
+    .btn-call:hover { border-color: var(--spice); color: var(--spice); }
+    .order-note { font-size: 0.72rem; color: rgba(247,240,224,0.3); margin-top: 1.5rem; letter-spacing: 2px; text-transform: uppercase; }
+
+    /* SOCIAL BAND */
+    .social-band { background: var(--spice); padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .social-label { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 4px; color: #fff; }
+    .social-link { color: #fff; text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; padding: 0.5rem 1.2rem; border: 1px solid rgba(255,255,255,0.4); display: flex; align-items: center; gap: 0.5rem; transition: background 0.2s; }
+    .social-link:hover { background: rgba(255,255,255,0.15); }
+
+    /* FOOTER */
+    footer { background: #080503; padding: 2.5rem 3rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 2rem; }
+    .footer-logo-main { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 4px; color: var(--cream); }
+    .footer-logo-main span { color: var(--spice); }
+    .footer-tagline { font-size: 0.62rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-top: 0.2rem; }
+    .footer-center { text-align: center; }
+    .footer-center p { font-size: 0.72rem; color: rgba(247,240,224,0.25); letter-spacing: 1px; }
+    .footer-right { text-align: right; font-size: 0.78rem; color: var(--muted); }
+    .footer-right a { color: var(--spice); text-decoration: none; }
+    .footer-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(25px); } to { opacity:1; transform:translateY(0); } }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-content { padding: 6rem 1.5rem 3rem; }
+      .section-wrap { padding: 0 1.5rem; }
+      .about-grid, .map-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .exp-grid { grid-template-columns: 1fr 1fr; }
+      .info-grid { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; text-align: center; }
+      .footer-right { text-align: center; }
+      .btn-call { margin-left: 0; margin-top: 1rem; }
+      .social-band { gap: 1rem; padding: 1rem 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .exp-grid { grid-template-columns: 1fr; }
+      .about-features, .about-cards { grid-template-columns: 1fr; }
+      .about-card.span2 { grid-column: 1; }
+      .menu-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-main">Muncheez<span> Bistro</span></div>
+    <div class="logo-sub">Home of Spice</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#find-us">Find Us</a></li>
+    <li><a href="#order" class="nav-reserve">Reserve</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span>Total Petrol Station · Membley · Northern Bypass, Nairobi</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="t1">Nairobi's</span>
+      <span class="t2">Finest Bistro</span>
+      <span class="t3">Where Every Meal Tells a Story</span>
+    </h1>
+    <p class="hero-desc">A hidden gem tucked along Northern Bypass Road — bold spices, slow-cooked BBQ, fresh seafood, craft cocktails, slow jams, and a soul-warming ambiance that keeps you coming back.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-fill">🍽️ Explore Menu</a>
+      <a href="#order" class="btn-outline">📲 Reserve a Table</a>
+    </div>
+    <div class="hero-stats">
+      <div class="h-stat"><div class="h-stat-num">4.6</div><div class="h-stat-label">Google Rating</div></div>
+      <div class="h-stat"><div class="h-stat-num">110+</div><div class="h-stat-label">Reviews</div></div>
+      <div class="h-stat"><div class="h-stat-num">7AM</div><div class="h-stat-label">Open Daily</div></div>
+      <div class="h-stat"><div class="h-stat-num">10PM</div><div class="h-stat-label">Last Orders</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">GARLIC BUTTER PRAWNS</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">GRILLED RED SNAPPER</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">CRAFT COCKTAILS</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">HONEY GLAZED RIBS</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">HAPPY HOUR DAILY</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">FREE WIFI</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">BOARD GAMES</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">FAMILY FRIENDLY</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">OPEN 7AM – 10PM</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">GARLIC BUTTER PRAWNS</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">GRILLED RED SNAPPER</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">CRAFT COCKTAILS</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">HONEY GLAZED RIBS</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">HAPPY HOUR DAILY</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">FREE WIFI</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">BOARD GAMES</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">FAMILY FRIENDLY</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">OPEN 7AM – 10PM</span><span class="ticker-dot"> · </span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-wrap">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-eyebrow">Our Story</div>
+        <h2 class="section-title">More than a restaurant — a destination</h2>
+        <p>Muncheez Bistro is Nairobi's best kept secret, hidden inside Total Petrol Station along Northern Bypass Road in Membley. What started as a bold culinary vision has grown into one of the area's most cherished dining spots.</p>
+        <p>Our chef sources the finest ingredients — fresh seafood, premium cuts, aromatic spices — crafting dishes that leave a lasting impression. From garlic butter jumbo prawns to honey glazed pork ribs, every plate is a work of art served beautifully on wooden boards.</p>
+        <p>Beyond the food, Muncheez is a lifestyle. Slow jams set the mood, board games bring the laughter, and our team makes sure every guest — from solo diners to birthday parties — leaves with a smile.</p>
+        <div class="about-features">
+          <div class="about-feat"><div class="about-feat-dot"></div>Free Wi-Fi</div>
+          <div class="about-feat"><div class="about-feat-dot"></div>Board & Card Games</div>
+          <div class="about-feat"><div class="about-feat-dot"></div>Kids' Menu & High Chairs</div>
+          <div class="about-feat"><div class="about-feat-dot"></div>Slow Jams Ambiance</div>
+          <div class="about-feat"><div class="about-feat-dot"></div>Free Parking</div>
+          <div class="about-feat"><div class="about-feat-dot"></div>Wheelchair Accessible</div>
+          <div class="about-feat"><div class="about-feat-dot"></div>Private Events & Catering</div>
+          <div class="about-feat"><div class="about-feat-dot"></div>Happy Hour Daily</div>
+        </div>
+      </div>
+      <div class="about-cards">
+        <div class="about-card span2">
+          <div class="stars">★★★★★</div>
+          <div class="about-card-text">"Takes a lot to impress me these days. This place surprised and impressed me! The vibe is groovy, the food was fantastic — the chef knows his spices and flavours!" — Feysal, Local Guide (171 reviews)</div>
+          <div style="margin-top:1rem;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">4.6 Rating · 110+ Google Reviews</div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-num">7AM</div>
+          <div class="about-card-label">Opens Every Day</div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-num">KES</div>
+          <div class="about-card-label">500 – 4,000 per person</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Chef's Selection</div>
+    <h2 class="section-title">The Menu</h2>
+    <div class="menu-cats">
+      <button class="cat-btn active" onclick="filterMenu(this,'all')">All</button>
+      <button class="cat-btn" onclick="filterMenu(this,'seafood')">🐟 Seafood</button>
+      <button class="cat-btn" onclick="filterMenu(this,'bbq')">🔥 BBQ & Grills</button>
+      <button class="cat-btn" onclick="filterMenu(this,'chicken')">🍗 Chicken</button>
+      <button class="cat-btn" onclick="filterMenu(this,'sides')">🍟 Sides & Bites</button>
+      <button class="cat-btn" onclick="filterMenu(this,'drinks')">🍹 Drinks</button>
+      <button class="cat-btn" onclick="filterMenu(this,'dessert')">🍫 Desserts</button>
+    </div>
+    <div class="menu-grid">
+      <!-- SEAFOOD -->
+      <div class="menu-card visible" data-cat="seafood"><div class="menu-card-top"><div class="menu-card-name">Garlic Butter Jumbo Prawns</div><div class="menu-card-price">Ksh 1,400</div></div><div class="menu-card-desc">Succulent jumbo prawns sautéed in rich garlic butter, fresh herbs, and lemon. Served with warm crusty bread.</div><div class="menu-card-tags"><span class="menu-tag sig">Chef's Special</span></div></div>
+      <div class="menu-card visible" data-cat="seafood"><div class="menu-card-top"><div class="menu-card-name">Grilled Red Snapper</div><div class="menu-card-price">Ksh 1,600</div></div><div class="menu-card-desc">Whole red snapper marinated in our house spice blend, grilled over open flame. Served with roasted potatoes, kachumbari, and creamy pepper sauce.</div><div class="menu-card-tags"><span class="menu-tag sig">Signature</span></div></div>
+      <div class="menu-card visible" data-cat="seafood"><div class="menu-card-top"><div class="menu-card-name">Calamari & Squid</div><div class="menu-card-price">Ksh 1,100</div></div><div class="menu-card-desc">Crispy fried calamari rings and tender squid tentacles, lightly seasoned. Served with garlic aioli and fresh lemon.</div><div class="menu-card-tags"><span class="menu-tag hot">Popular</span></div></div>
+      <div class="menu-card visible" data-cat="seafood"><div class="menu-card-top"><div class="menu-card-name">Coconut Prawn Curry</div><div class="menu-card-price">Ksh 1,300</div></div><div class="menu-card-desc">Tiger prawns slow-cooked in a rich coconut and tomato curry, spiced with ginger and coriander. Served with steamed rice.</div><div class="menu-card-tags"><span class="menu-tag hot">Spicy</span></div></div>
+      <div class="menu-card visible" data-cat="seafood"><div class="menu-card-top"><div class="menu-card-name">Grilled Lobster Tail</div><div class="menu-card-price">Ksh 2,200</div></div><div class="menu-card-desc">Premium lobster tail grilled with herb butter, served with roasted garlic potatoes and garden salad.</div><div class="menu-card-tags"><span class="menu-tag sig">Premium</span></div></div>
+      <div class="menu-card visible" data-cat="seafood"><div class="menu-card-top"><div class="menu-card-name">Fish & Chips</div><div class="menu-card-price">Ksh 950</div></div><div class="menu-card-desc">Crispy golden battered fish fillet with thick-cut chips, tartar sauce, and a lemon wedge.</div><div class="menu-card-tags"><span class="menu-tag new">Classic</span></div></div>
+
+      <!-- BBQ -->
+      <div class="menu-card visible" data-cat="bbq"><div class="menu-card-top"><div class="menu-card-name">Honey Glazed Pork Ribs</div><div class="menu-card-price">Ksh 1,500</div></div><div class="menu-card-desc">Slow-braised pork ribs glazed with our house honey and spice sauce. Fall-off-the-bone tender, served with fries and coleslaw.</div><div class="menu-card-tags"><span class="menu-tag sig">Chef's Special</span><span class="menu-tag hot">Fan Fave</span></div></div>
+      <div class="menu-card visible" data-cat="bbq"><div class="menu-card-top"><div class="menu-card-name">Pork Chops Sauté</div><div class="menu-card-price">Ksh 1,200</div></div><div class="menu-card-desc">Thick-cut pork chops sautéed with caramelised onions, bell peppers, and our signature spice blend. Served on a wooden board with roasted potatoes.</div><div class="menu-card-tags"><span class="menu-tag hot">Highly Recommended</span></div></div>
+      <div class="menu-card visible" data-cat="bbq"><div class="menu-card-top"><div class="menu-card-name">BBQ Mixed Grill Platter</div><div class="menu-card-price">Ksh 2,800</div></div><div class="menu-card-desc">A generous sharing platter of ribs, pork chops, grilled chicken, and sausages with ugali, kachumbari, and dipping sauces.</div><div class="menu-card-tags"><span class="menu-tag sig">For Groups</span></div></div>
+      <div class="menu-card visible" data-cat="bbq"><div class="menu-card-top"><div class="menu-card-name">Smoked Beef Brisket</div><div class="menu-card-price">Ksh 1,400</div></div><div class="menu-card-desc">12-hour slow-smoked beef brisket with a smoky bark, served sliced with pickled onions and fresh bread.</div><div class="menu-card-tags"><span class="menu-tag sig">Signature</span></div></div>
+      <div class="menu-card visible" data-cat="bbq"><div class="menu-card-top"><div class="menu-card-name">BBQ Lamb Chops</div><div class="menu-card-price">Ksh 1,800</div></div><div class="menu-card-desc">Tender lamb chops marinated in rosemary and garlic, grilled over charcoal. Served with mint jelly and roasted vegetables.</div><div class="menu-card-tags"><span class="menu-tag sig">Premium</span></div></div>
+      <div class="menu-card visible" data-cat="bbq"><div class="menu-card-top"><div class="menu-card-name">Smokehouse Burger</div><div class="menu-card-price">Ksh 900</div></div><div class="menu-card-desc">Thick beef patty, smoked cheddar, caramelised onions, and our BBQ house sauce on a toasted brioche bun. Served with fries.</div><div class="menu-card-tags"><span class="menu-tag hot">Popular</span></div></div>
+
+      <!-- CHICKEN -->
+      <div class="menu-card visible" data-cat="chicken"><div class="menu-card-top"><div class="menu-card-name">Stuffed Chicken Roulade</div><div class="menu-card-price">Ksh 1,350</div></div><div class="menu-card-desc">Tender chicken breast stuffed with spinach, sundried tomatoes, and mozzarella, roasted golden. Served with mashed potato and jus.</div><div class="menu-card-tags"><span class="menu-tag sig">Chef's Special</span></div></div>
+      <div class="menu-card visible" data-cat="chicken"><div class="menu-card-top"><div class="menu-card-name">Chicken Cordon Bleu</div><div class="menu-card-price">Ksh 1,250</div></div><div class="menu-card-desc">Classic chicken breast filled with ham and Swiss cheese, breaded and pan-fried. Served with creamy mushroom sauce and vegetables.</div><div class="menu-card-tags"><span class="menu-tag new">Classic</span></div></div>
+      <div class="menu-card visible" data-cat="chicken"><div class="menu-card-top"><div class="menu-card-name">Butter Chicken</div><div class="menu-card-price">Ksh 1,100</div></div><div class="menu-card-desc">Succulent chicken in a velvety tomato-butter sauce infused with aromatic spices. Served with naan or steamed rice.</div><div class="menu-card-tags"><span class="menu-tag hot">Popular</span></div></div>
+      <div class="menu-card visible" data-cat="chicken"><div class="menu-card-top"><div class="menu-card-name">Spiced Grilled Wings</div><div class="menu-card-price">Ksh 900</div></div><div class="menu-card-desc">Wings marinated overnight in our signature spice blend with rosemary and chili, grilled to perfection. Served with blue cheese dip.</div><div class="menu-card-tags"><span class="menu-tag hot">Spicy</span></div></div>
+      <div class="menu-card visible" data-cat="chicken"><div class="menu-card-top"><div class="menu-card-name">Grilled Chicken Platter</div><div class="menu-card-price">Ksh 1,000</div></div><div class="menu-card-desc">Half chicken marinated in house spices, grilled over open flame. Served with ugali or rice and kachumbari.</div><div class="menu-card-tags"><span class="menu-tag hot">Fan Fave</span></div></div>
+      <div class="menu-card visible" data-cat="chicken"><div class="menu-card-top"><div class="menu-card-name">Chicken Shawarma Wrap</div><div class="menu-card-price">Ksh 800</div></div><div class="menu-card-desc">Grilled spiced chicken wrapped in soft flatbread with pickled red onions, fresh peppers, and garlic sauce. Served with fries.</div><div class="menu-card-tags"><span class="menu-tag hot">Quick Bite</span></div></div>
+
+      <!-- SIDES -->
+      <div class="menu-card visible" data-cat="sides"><div class="menu-card-top"><div class="menu-card-name">Loaded Fries</div><div class="menu-card-price">Ksh 650</div></div><div class="menu-card-desc">Thick-cut fries loaded with melted cheese, sautéed mushrooms, caramelised onions, and a drizzle of sriracha mayo.</div><div class="menu-card-tags"><span class="menu-tag veg">Vegetarian</span></div></div>
+      <div class="menu-card visible" data-cat="sides"><div class="menu-card-top"><div class="menu-card-name">Garden Salad</div><div class="menu-card-price">Ksh 550</div></div><div class="menu-card-desc">Fresh greens, cherry tomatoes, cucumber, red onion, and feta cheese with your choice of dressing.</div><div class="menu-card-tags"><span class="menu-tag veg">Vegetarian</span></div></div>
+      <div class="menu-card visible" data-cat="sides"><div class="menu-card-top"><div class="menu-card-name">Vegetable Rice</div><div class="menu-card-price">Ksh 500</div></div><div class="menu-card-desc">Fragrant basmati rice stir-fried with seasonal vegetables, ginger, garlic, and soy sauce.</div><div class="menu-card-tags"><span class="menu-tag veg">Vegetarian</span></div></div>
+      <div class="menu-card visible" data-cat="sides"><div class="menu-card-top"><div class="menu-card-name">Ugali & Sukuma</div><div class="menu-card-price">Ksh 400</div></div><div class="menu-card-desc">Classic Kenyan staple — firm ugali served with well-seasoned sukuma wiki (collard greens) and a side of kachumbari.</div><div class="menu-card-tags"><span class="menu-tag veg">Local Classic</span></div></div>
+      <div class="menu-card visible" data-cat="sides"><div class="menu-card-top"><div class="menu-card-name">Garlic Bread</div><div class="menu-card-price">Ksh 350</div></div><div class="menu-card-desc">Toasted sourdough bread with our house garlic butter and fresh herbs. Perfect to pair with any meal.</div><div class="menu-card-tags"><span class="menu-tag veg">Vegetarian</span></div></div>
+      <div class="menu-card visible" data-cat="sides"><div class="menu-card-top"><div class="menu-card-name">Pilau Rice</div><div class="menu-card-price">Ksh 500</div></div><div class="menu-card-desc">Fragrant spiced Kenyan pilau rice cooked with whole spices, caramelised onions, and a hint of ginger.</div><div class="menu-card-tags"><span class="menu-tag hot">Kenyan Favourite</span></div></div>
+
+      <!-- DRINKS -->
+      <div class="menu-card visible" data-cat="drinks"><div class="menu-card-top"><div class="menu-card-name">Signature Cocktails</div><div class="menu-card-price">Ksh 800–1,200</div></div><div class="menu-card-desc">House cocktails crafted by our bartenders — tropical fruit blends, classics, and bold original creations. You won't feel cheated.</div><div class="menu-card-tags"><span class="menu-tag sig">Award Worthy</span></div></div>
+      <div class="menu-card visible" data-cat="drinks"><div class="menu-card-top"><div class="menu-card-name">Mocktails</div><div class="menu-card-price">Ksh 500–700</div></div><div class="menu-card-desc">Refreshing non-alcoholic blends — fruity, herby, and always satisfying. Ask our team for today's special mocktail.</div><div class="menu-card-tags"><span class="menu-tag hot">Fan Fave</span></div></div>
+      <div class="menu-card visible" data-cat="drinks"><div class="menu-card-top"><div class="menu-card-name">Pineapple Mint Juice</div><div class="menu-card-price">Ksh 400</div></div><div class="menu-card-desc">Fresh pineapple blended with mint leaves and a hint of ginger. Refreshing, zingy, and our most recommended drink.</div><div class="menu-card-tags"><span class="menu-tag hot">Most Recommended</span></div></div>
+      <div class="menu-card visible" data-cat="drinks"><div class="menu-card-top"><div class="menu-card-name">Beer, Wine & Spirits</div><div class="menu-card-price">From Ksh 350</div></div><div class="menu-card-desc">A curated selection of local and imported beers, fine wines, and premium spirits. Great beer, wine, and spirits selection.</div><div class="menu-card-tags"><span class="menu-tag sig">Great Selection</span></div></div>
+      <div class="menu-card visible" data-cat="drinks"><div class="menu-card-top"><div class="menu-card-name">Coffee & Tea</div><div class="menu-card-price">Ksh 250–450</div></div><div class="menu-card-desc">Specialty coffees — espresso, cappuccino, latte — and a wide selection of premium teas. Perfect for brunch or a working afternoon.</div><div class="menu-card-tags"><span class="menu-tag veg">All Day</span></div></div>
+      <div class="menu-card visible" data-cat="drinks"><div class="menu-card-top"><div class="menu-card-name">Happy Hour Specials</div><div class="menu-card-price">Ask Us</div></div><div class="menu-card-desc">Daily happy hour deals on drinks and food. Ask our team for today's happy hour menu — always great value.</div><div class="menu-card-tags"><span class="menu-tag new">Daily Deal</span></div></div>
+
+      <!-- DESSERTS -->
+      <div class="menu-card visible" data-cat="dessert"><div class="menu-card-top"><div class="menu-card-name">Chocolate Lava Cake</div><div class="menu-card-price">Ksh 750</div></div><div class="menu-card-desc">Warm chocolate cake with a molten centre, served with vanilla ice cream and a dusting of cocoa powder.</div><div class="menu-card-tags"><span class="menu-tag sig">Great Dessert</span></div></div>
+      <div class="menu-card visible" data-cat="dessert"><div class="menu-card-top"><div class="menu-card-name">Fresh Fruit Platter</div><div class="menu-card-price">Ksh 600</div></div><div class="menu-card-desc">Seasonal fresh fruits artfully arranged — mango, pineapple, watermelon, strawberries — with a honey and mint drizzle.</div><div class="menu-card-tags"><span class="menu-tag veg">Healthy Choice</span></div></div>
+      <div class="menu-card visible" data-cat="dessert"><div class="menu-card-top"><div class="menu-card-name">Cheesecake of the Day</div><div class="menu-card-price">Ksh 700</div></div><div class="menu-card-desc">Our chef's daily cheesecake creation — ask your server for today's flavour. Rich, creamy, and always a delight.</div><div class="menu-card-tags"><span class="menu-tag new">Ask Us</span></div></div>
+      <div class="menu-card visible" data-cat="dessert"><div class="menu-card-top"><div class="menu-card-name">Ice Cream Sundae</div><div class="menu-card-price">Ksh 500</div></div><div class="menu-card-desc">Three scoops of premium ice cream with hot fudge, whipped cream, crushed nuts, and a cherry on top.</div><div class="menu-card-tags"><span class="menu-tag veg">Kids Love It</span></div></div>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:0.75rem;margin-top:2rem;letter-spacing:2px;text-transform:uppercase;">Prices subject to change · Ask our team for daily specials and all-you-can-eat offers</p>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Why Muncheez</div>
+    <h2 class="section-title">The Full Experience</h2>
+    <div class="exp-grid">
+      <div class="exp-card"><div class="exp-icon">🎵</div><div class="exp-title">Slow Jams Ambiance</div><div class="exp-desc">A curated soundtrack of smooth slow jams sets the perfect mood — quiet enough to talk, groovy enough to enjoy. Romantic dates and group hangouts alike.</div></div>
+      <div class="exp-card"><div class="exp-icon">🎲</div><div class="exp-title">Board & Card Games</div><div class="exp-desc">A great selection of board and card games for all guests. Perfect for friend groups, families, or a fun date night. Game on!</div></div>
+      <div class="exp-card"><div class="exp-icon">👶</div><div class="exp-title">Family Friendly</div><div class="exp-desc">Kids are always welcome. We have a dedicated kids' menu, high chairs, and attentive staff who'll happily hold your little ones so you can enjoy your meal.</div></div>
+      <div class="exp-card"><div class="exp-icon">💻</div><div class="exp-title">Work-Friendly Space</div><div class="exp-desc">Free high-speed Wi-Fi, cozy booth seating, and a calm atmosphere make Muncheez an ideal spot for remote work or meetings.</div></div>
+      <div class="exp-card"><div class="exp-icon">🎉</div><div class="exp-title">Private Events</div><div class="exp-desc">Host your birthday, celebration, or corporate event at Muncheez. We've handled everything from intimate dinners to large group gatherings — magnificently.</div></div>
+      <div class="exp-card"><div class="exp-icon">♿</div><div class="exp-title">Fully Accessible</div><div class="exp-desc">Wheelchair-accessible parking, entrance, seating, and restrooms. Muncheez is designed so everyone can enjoy comfortably.</div></div>
+      <div class="exp-card"><div class="exp-icon">🍹</div><div class="exp-title">Happy Hour</div><div class="exp-desc">Daily happy hour deals on drinks and food. Great cocktails, cold beers, and amazing bites at unbeatable prices.</div></div>
+      <div class="exp-card"><div class="exp-icon">🅿️</div><div class="exp-title">Free Parking</div><div class="exp-desc">Ample free parking at the Total Petrol Station. No parking stress — just great food. Free street parking also available nearby.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="section-wrap">
+    <div class="section-eyebrow">What Our Guests Say</div>
+    <h2 class="section-title">Real Reviews</h2>
+    <div class="reviews-grid">
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Muncheez has always been my go-to spot for savory dishes, ambiance, and a cozy working space. Recently hosted a birthday there and it was nothing short of magnificent!! They also have board games for friend-groups. Highly Recommend if you're around Northern Bypass!"</div><div class="review-name">Jim · Local Guide</div><div class="review-detail">14 reviews · 9 months ago</div><div class="score-row"><span class="score-pill">Food ★5</span><span class="score-pill">Service ★5</span><span class="score-pill">Atm ★5</span></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Takes a lot to impress me these days. This place surprised and impressed me! The vibe is groovy! The food was fantastic. The chef knows his spices and flavours! Friendly staff that did not bluff on how long the food would take."</div><div class="review-name">Feysal Anthony · Local Guide</div><div class="review-detail">171 reviews · 4 months ago · KES 1,000–1,500</div><div class="score-row"><span class="score-pill">Food ★5</span><span class="score-pill">Service ★4</span><span class="score-pill">Atm ★4</span></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"I had to give them 5 stars because they deserve it. Beautiful place, best food in the area guaranteed! Very clean and good service. Highly recommend the Pineapple Mint Juice!"</div><div class="review-name">EMI Beauty · Local Guide</div><div class="review-detail">39 reviews · 2 years ago · Takeout · KES 500–1,000</div><div class="score-row"><span class="score-pill">Food ★5</span></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Really nice space, very aesthetic, for date nights or game nights with your friend group. It's in a hidden spot at Total Petrol Station Membley and it's rarely crowded. Their mocktails are amazing."</div><div class="review-name">Mburu · Local Guide</div><div class="review-detail">35 reviews · 2 years ago · Brunch · KES 500–1,000</div><div class="score-row"><span class="score-pill">Service ★5</span><span class="score-pill">Atm ★5</span></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"In a while this is the best restaurant I've been to especially when with a child. Food is tasty and generous. The wait staff are swift. The fact that they held our children so we could eat is the main reason I'm going back!"</div><div class="review-name">Maria · Local Guide</div><div class="review-detail">2 months ago · Lunch · KES 3,500–4,000 · Group of 3-4</div><div class="score-row"><span class="score-pill">Food ★5</span><span class="score-pill">Service ★5</span><span class="score-pill">Atm ★5</span></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"The ambiance is so calming with slow jams, cocktails are amazing — you don't feel cheated. And the food!!!! Always a good meal time here."</div><div class="review-name">Muncheez Regular</div><div class="review-detail">3 months ago · Brunch · KES 3,500–4,000 · Quiet, easy to talk</div><div class="score-row"><span class="score-pill">Food ★5</span><span class="score-pill">Service ★5</span><span class="score-pill">Atm ★5</span></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Sweet, tasty food and excellent service. Highly recommend."</div><div class="review-name">Victaline Cherotich</div><div class="review-detail">4 months ago</div><div class="score-row"><span class="score-pill">Food ★5</span><span class="score-pill">Service ★5</span><span class="score-pill">Atm ★5</span></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Loved the pork and sauté. The lady at the reception is gorgeous and respectful. The dude who served us was really helpful when it came to choosing the meal. Would highly recommend."</div><div class="review-name">Nelson Chege · Local Guide</div><div class="review-detail">127 reviews · 2 years ago · KES 500–1,000</div><div class="score-row"><span class="score-pill">Food ★5</span><span class="score-pill">Service ★5</span><span class="score-pill">Atm ★5</span></div></div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <a href="https://www.google.com/maps/search/Muncheez+Bistro+Nairobi" target="_blank" class="btn-outline">View All 110+ Reviews on Google →</a>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info-section" id="find-us">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Practical Info</div>
+    <h2 class="section-title">Plan Your Visit</h2>
+    <div class="info-grid">
+      <div>
+        <div class="info-block-title">Opening Hours</div>
+        <div class="open-badge"><div class="open-dot"></div>Open Today</div>
+        <div class="hours-row"><span>Monday – Sunday</span><strong style="color:var(--cream)">7:00 AM – 10:00 PM</strong></div>
+        <div class="hours-row"><span>Public Holidays</span><strong style="color:var(--cream)">7:00 AM – 10:00 PM</strong></div>
+        <p style="font-size:0.75rem;color:rgba(247,240,224,0.35);margin-top:1rem;line-height:1.6;">⚠️ Hours may vary during Eid al-Fitr. We recommend calling ahead to confirm.</p>
+        <div style="margin-top:1.5rem">
+          <a href="tel:+254726592499" class="btn-fill" style="font-size:0.75rem;padding:0.7rem 1.5rem">📞 Call to Reserve</a>
+        </div>
+      </div>
+      <div>
+        <div class="info-block-title">Services & Offerings</div>
+        <div class="info-tag-list">
+          <span class="info-tag">Dine-in</span><span class="info-tag">Takeaway</span><span class="info-tag">Delivery</span><span class="info-tag">Drive-through</span><span class="info-tag">Catering</span><span class="info-tag">Reservations</span><span class="info-tag">Table Service</span><span class="info-tag">All You Can Eat</span><span class="info-tag">Happy Hour</span><span class="info-tag">Late Night Food</span><span class="info-tag">Small Plates</span><span class="info-tag">Alcohol</span><span class="info-tag">Beer & Wine</span><span class="info-tag">Cocktails & Spirits</span><span class="info-tag">Coffee & Tea</span><span class="info-tag">Free Wi-Fi</span><span class="info-tag">Board Games</span><span class="info-tag">Kids Menu</span><span class="info-tag">High Chairs</span><span class="info-tag">Bar on Site</span>
+        </div>
+      </div>
+      <div>
+        <div class="info-block-title">Payment & Access</div>
+        <div class="info-item"><div class="info-item-icon">💳</div><div class="info-item-text"><strong>Payment:</strong> Credit cards, Debit cards, NFC & Mobile payments accepted</div></div>
+        <div class="info-item"><div class="info-item-icon">🅿️</div><div class="info-item-text"><strong>Parking:</strong> Free parking lot at Total Petrol Station + Free street parking</div></div>
+        <div class="info-item"><div class="info-item-icon">♿</div><div class="info-item-text"><strong>Accessibility:</strong> Wheelchair-accessible parking, entrance, seating & toilet</div></div>
+        <div class="info-item"><div class="info-item-icon">👶</div><div class="info-item-text"><strong>Families:</strong> Kids' menu, high chairs, child-friendly staff & kids' birthday friendly</div></div>
+        <div class="info-item"><div class="info-item-icon">📅</div><div class="info-item-text"><strong>Reservations:</strong> Accepted — brunch reservations highly recommended</div></div>
+        <div class="info-item"><div class="info-item-icon">💰</div><div class="info-item-text"><strong>Price range:</strong> KES 500 – 4,000 per person</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Find Us</div>
+    <h2 class="section-title">Our Location</h2>
+    <div class="map-inner">
+      <div>
+        <div class="map-detail-item"><div class="map-detail-icon">📍</div><div><div class="map-detail-label">Address</div><div class="map-detail-val">Total Petrol Station, Membley<br>Northern Bypass Road<br>Kahawa North, Nairobi</div></div></div>
+        <div class="map-detail-item"><div class="map-detail-icon">📞</div><div><div class="map-detail-label">Phone & WhatsApp</div><div class="map-detail-val"><a href="tel:+254726592499" style="color:var(--spice);text-decoration:none;font-size:1.1rem;font-weight:600">0726 592 499</a></div></div></div>
+        <div class="map-detail-item"><div class="map-detail-icon">🗺️</div><div><div class="map-detail-label">Nearby Landmarks</div><div class="map-detail-val">Near Kenyatta University Teaching Hospital · Membley Estate · Between Kiambu & Nairobi Counties</div></div></div>
+        <div class="map-detail-item"><div class="map-detail-icon">💡</div><div><div class="map-detail-label">Pro Tip</div><div class="map-detail-val" style="font-size:0.82rem;color:var(--muted)">We're a hidden gem! Look for the Total Petrol Station on Northern Bypass — we're tucked inside. Worth every second of the search!</div></div></div>
+        <a href="https://www.google.com/maps/search/Muncheez+Bistro+Nairobi" target="_blank" class="btn-fill" style="margin-top:1.5rem;display:inline-flex">📍 Get Directions on Google Maps</a>
+      </div>
+      <div class="map-frame">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.5!2d36.878!3d-1.188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f3d8b7e7e7e7e%3A0x7e7e7e7e7e7e7e7e!2sMuncheez%20Bistro!5e0!3m2!1sen!2ske!4v1" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER CTA -->
+<section class="order-cta" id="order">
+  <div class="order-cta-bg"></div>
+  <div class="order-cta-content">
+    <div class="section-eyebrow" style="justify-content:center">Ready to Visit?</div>
+    <h2>Reserve a Table or <em>Order Now</em></h2>
+    <p>Call us, WhatsApp your order, or simply walk in. Open every day from 7AM to 10PM. Brunch reservations are highly recommended!</p>
+    <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;align-items:center">
+      <a href="https://wa.me/254726592499?text=Hi%20Muncheez!%20I'd%20like%20to%20make%20a%20reservation." class="btn-whatsapp" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us
+      </a>
+      <a href="tel:+254726592499" class="btn-call">📞 Call 0726 592 499</a>
+    </div>
+    <div class="order-note">Open Daily · 7:00 AM – 10:00 PM · Total Petrol Station, Membley, Nairobi</div>
+  </div>
+</section>
+
+<!-- SOCIAL BAND -->
+<div class="social-band">
+  <div class="social-label">Follow Our Journey</div>
+  <a href="https://www.instagram.com/muncheezbistro" target="_blank" class="social-link">📸 Instagram @muncheezbistro</a>
+  <a href="https://www.facebook.com/muncheezbistro" target="_blank" class="social-link">👍 Facebook</a>
+</div>
+
+<hr class="footer-divider"/>
+<footer>
+  <div>
+    <div class="footer-logo-main">Muncheez<span> Bistro</span></div>
+    <div class="footer-tagline">Home of Spice · Membley, Nairobi</div>
+  </div>
+  <div class="footer-center">
+    <p>© 2025 Muncheez Bistro. All rights reserved.</p>
+    <p style="margin-top:0.4rem">Open Daily 7AM – 10PM</p>
+  </div>
+  <div class="footer-right">
+    <p>Total Petrol Station, Northern Bypass Road</p>
+    <p style="margin-top:0.3rem"><a href="tel:+254726592499">0726 592 499</a></p>
+  </div>
+</footer>
+
+<script>
+  function filterMenu(btn, cat) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.menu-card').forEach(card => {
+      card.classList.toggle('visible', cat === 'all' || card.dataset.cat === cat);
+    });
+  }
+
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const open = links.style.display === 'flex';
+    links.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:62px;left:0;right:0;background:rgba(15,10,5,0.98);padding:2rem;gap:1.5rem;z-index:999;border-bottom:1px solid rgba(247,240,224,0.08)';
+  }
+
+  // Close mobile menu on link click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.nav-links').style.cssText = '';
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.exp-card, .review-card, .about-card, .info-item, .map-detail-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
